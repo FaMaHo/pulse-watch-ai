@@ -1,10 +1,11 @@
 # Pulse Watch AI
 
-An open-source smart bracelet for continuous heart monitoring using LILYGO T-Watch S3 and MAX30102 PPG sensor, with AI-powered cardiac anomaly detection.
+A smart bracelet for continuous heart monitoring using LILYGO T-Watch S3 and MAX30102 PPG sensor, with AI-powered cardiac anomaly detection.
 
 ## 🎯 Project Goal
 
-We're creating a wearable device that continuously monitors heart data and uses AI to detect early signs of potential cardiac issues - especially for patients with cardiac conditions - to enable proactive care.
+We’re creating a smart bracelet that continuously monitors heart data (via PPG sensor) and uses AI to detect early signs of potential cardiac issues - especially for patients with conditions like heart scoliosis - to enable proactive care.
+
 
 ## 🛠 Hardware
 
