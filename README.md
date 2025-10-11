@@ -4,8 +4,14 @@ A smart bracelet for continuous heart monitoring using LILYGO T-Watch S3 and MAX
 
 ## 🎯 Project Goal
 
-We’re creating a smart bracelet that continuously monitors heart data (via PPG sensor) and uses AI to detect early signs of potential cardiac issues - especially for patients with conditions like heart scoliosis - to enable proactive care.
+We're creating a smart bracelet that continuously monitors heart data (via PPG sensor) and uses AI to detect early signs of potential cardiac issues - especially cardiovascular irregularities like heart sclerosis - to enable proactive care.
 
+## 📊 Current Status
+
+- ✅ MAX30102 sensor received 
+- ✅ T-Watch S3 Plus ordered
+- 🔄 Backend development in progress
+- 📝 System architecture planned
 
 ## 🛠 Hardware
 
@@ -22,8 +28,9 @@ We’re creating a smart bracelet that continuously monitors heart data (via PPG
 
 ### Backend (Python)
 - Flask or FastAPI server
-- Store data in SQLite/PostgreSQL
-- Run AI/ML models to flag abnormal patterns
+- PostgreSQL database (SQLite for development)
+- REST API for data ingestion
+- AI/ML models to flag abnormal patterns
 
 ### Visualization
 - Web dashboard (React or HTML+JS)
@@ -37,17 +44,48 @@ We’re creating a smart bracelet that continuously monitors heart data (via PPG
 2. Connect MAX30102 to watch via I²C
 3. Install Arduino IDE with ESP32 support
 
-### Software Setup
+### Setup
+1. Clone the repository
 ```bash
-# Clone the repository
 git clone https://github.com/FaMaHo/pulse-watch-ai.git
-cd pulse-watch-ai
-
+cd pulse-watch-ai/backend
 ```
+2. Create virtual environment
+```bash
+bashpython -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
+
+3. Install dependencies
+```bash
+bashpip install -r requirements.txt
+```
+
+4. Run the server
+```bash
+bashuvicorn main:app --reload
+```
+
+5. Test with mock data
+```bash
+bashpython mock_data_generator.py
+```
+
+6. View API documentation
+Open your browser: http://localhost:8000/docs
 
 ## 📁 Project Structure
 
 ```
 pulse-watch-ai/
+├── backend/           # FastAPI server
+│   ├── main.py
+│   ├── models.py
+│   ├── schemas.py
+│   ├── database.py
+│   ├── anomaly_detector.py
+│   └── mock_data_generator.py
+├── firmware/          # Arduino/ESP32 code (coming soon)
+├── frontend/          # Web dashboard (coming soon)
 └── docs/              # Documentation
 ```

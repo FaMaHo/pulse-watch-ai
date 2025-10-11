@@ -2,7 +2,6 @@
 
 Useful links and resources we've found helpful while working on this project.
 
----
 
 ## Hardware Documentation
 
@@ -14,7 +13,6 @@ Useful links and resources we've found helpful while working on this project.
 - **Datasheet**: https://www.analog.com/media/en/technical-documentation/data-sheets/max30102.pdf
 - **SparkFun Library**: https://github.com/sparkfun/SparkFun_MAX3010x_Sensor_Library
 
----
 
 ## Tutorials That Helped
 
@@ -29,3 +27,10 @@ Useful links and resources we've found helpful while working on this project.
 ### Signal Processing & PPG
 - Understanding PPG signals: https://github.com/paulvangentcom/heartrate_analysis_Arduino
 - Heart rate calculation methods: https://makersportal.com/blog/2019/6/24/arduino-heart-rate-monitor-using-max30102-and-pulse-oximetry
+
+
+## Backend Development
+
+### Python frameworks
+- **FastAPI Documentation**: https://fastapi.tiangolo.com/
+- **sqlalchemy ORM Quick Start**: https://docs.sqlalchemy.org/en/20/orm/quickstart.html
