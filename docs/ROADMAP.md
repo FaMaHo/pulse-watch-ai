@@ -36,8 +36,8 @@
 
 - [x] Set up Python FastAPI backend
 - [x] Create API endpoint to receive sensor readings
-- [ ] Set up database (SQLite for dev, PostgreSQL for production)
-- [ ] Design database schema
+- [x] Set up database (SQLite for dev, PostgreSQL for production)
+- [x] Design database schema
   - `readings` table: timestamp, user_id, heart_rate, spo2, raw_ppg
   - `anomalies` table: timestamp, type, severity
 - [ ] Create data validation & error handling
