@@ -37,14 +37,8 @@ We're creating a smart bracelet that continuously monitors heart data (via PPG s
 - Live data visualization
 - Alert system for anomalies
 
-## 🚀 Getting Started
 
-### Hardware Setup
-1. Order LILYGO T-Watch S3 Plus
-2. Connect MAX30102 to watch via I²C
-3. Install Arduino IDE with ESP32 support
-
-### Setup
+## Setup
 1. Clone the repository
 ```bash
 git clone https://github.com/FaMaHo/pulse-watch-ai.git
