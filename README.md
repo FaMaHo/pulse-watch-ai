@@ -1,49 +1,47 @@
-# Pulse Watch AI
+# Pulse Watch AI: AI Bracelet for Heart Monitoring
 
-A smart bracelet for continuous heart monitoring using LILYGO T-Watch S3 and MAX30102 PPG sensor, with AI-powered cardiac anomaly detection.
+A smart bracelet system for **continuous, non-invasive physiological monitoring** to detect early indicators of serious cardiovascular conditions, primarily focusing on patterns associated with **Myocardial Fibrosis (Cardiosclerosis)**. 
 
-## 🎯 Project Goal
+## 🎯 Core Objective
 
-We're creating a smart bracelet that continuously monitors heart data (via PPG sensor) and uses AI to detect early signs of potential cardiac issues - especially cardiovascular irregularities like heart sclerosis - to enable proactive care.
+To develop an AI-powered system that analyzes patterns in Heart Rate Variability (**HRV**), **Pulse Waveform Morphology**, and **activity levels** (biosignals) collected from a wrist-worn device to identify anomalies associated with early-stage **Heart Sclerosis (Cardiosclerosis)**.
+
+[cite_start]This approach focuses on **early detection** and **preventive healthcare** for at-risk populations (e.g., post-MI patients, elderly) by non-invasively detecting the scarring of healthy heart muscle (myocardium)[cite: 1, 5, 23, 24, 25].
 
 ## 📊 Current Status
 
-- ✅ MAX30102 sensor received 
-- ✅ T-Watch S3 Plus ordered
-- 🔄 Backend development in progress
-- 📝 System architecture planned
+- ✅ **Hardware Confirmed:** MAX30102 PPG sensor received; [cite_start]LILYGO T-Watch S3 Plus ordered[cite: 29, 30].
+- ✅ **System Architecture Planned:** Full stack defined from sensor to cloud.
+- 🔄 **AI Pre-training in Progress:** Utilizing public cardiac datasets to build a foundational model while awaiting custom hardware.
+- 📝 **PostgreSQL Schema Designed:** Database architecture ready for real-time sensor data ingestion.
 
-## 🛠 Hardware
+## 🛠 Technical Stack
 
-- **LILYGO T-Watch S3 Plus** - ESP32-S3 smartwatch with display
-- **MAX30102 Sensor** - PPG heart rate and SpO2 sensor
-- **Connection**: I²C interface between watch and sensor
+| Layer | Component | Details |
+| :--- | :--- | :--- |
+| **Hardware** | LILYGO T-Watch S3 Plus + MAX30102 PPG | Collects **raw PPG and Accelerometer** data. [cite_start]Uses **I²C** connection. [cite: 17, 29, 30] |
+| **Firmware** | C++ / Arduino (PlatformIO) | [cite_start]Filters noise on-device to conserve power; transmits cleaned data (HR/HRV) via Wi-Fi/Bluetooth[cite: 40, 42, 43]. |
+| **Backend/DB** | **FastAPI (Python)** + **PostgreSQL** | [cite_start]Ingests real-time JSON data; stores high-volume sensor streams and extracted metrics[cite: 45, 46]. |
+| **AI/ML** | Python (TensorFlow/scikit-learn) | **1D CNNs** for morphology analysis; **LSTMs** for long-term HRV trend detection; [cite_start]**Anomaly Detection** for alerting[cite: 47]. |
+| **Frontend** | Web Dashboard (React or HTML+JS) | [cite_start]Real-time data visualization and anomaly alerting[cite: 48, 49]. |
 
-## 📐 Technical Plan
+## 🚀 Immediate Next Steps
 
-### Firmware (C++ / Arduino)
-- Read raw PPG/heart-rate data from MAX30102
-- Preprocess signals (filtering, averaging)
-- Send data via Wi-Fi/Bluetooth to server
+1.  [cite_start]Set up **PlatformIO/Arduino IDE** for T-Watch development[cite: 53].
+2.  [cite_start]Test MAX30102 sensor communication (with Arduino Uno/breadboard)[cite: 54].
+3.  [cite_start]**Implement Mock Data Generator** to stress-test the full `Watch -> FastAPI -> PostgreSQL` pipeline[cite: 56].
+4.  Begin **AI Model Pre-training** using public cardiac datasets (e.g., PulseDB, PPG-DaLiA).
 
-### Backend (Python)
-- Flask or FastAPI server
-- PostgreSQL database (SQLite for development)
-- REST API for data ingestion
-- AI/ML models to flag abnormal patterns
+---
 
-### Visualization
-- Web dashboard (React or HTML+JS)
-- Live data visualization
-- Alert system for anomalies
+## Setup (Backend)
 
-
-## Setup
-1. Clone the repository
+1. Clone the repository and navigate to the backend directory:
 ```bash
-git clone https://github.com/FaMaHo/pulse-watch-ai.git
+git clone [https://github.com/FaMaHo/pulse-watch-ai.git](https://github.com/FaMaHo/pulse-watch-ai.git)
 cd pulse-watch-ai/backend
 ```
+
 2. Create virtual environment
 ```bash
 bashpython -m venv venv
