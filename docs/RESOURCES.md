@@ -4,9 +4,9 @@
 
 ## 🎯 Clinical & Medical References
 
-* **Heart Sclerosis Definition**: Pathological replacement of healthy heart muscle (myocardium) with fibrous/scar tissue, leading to impaired function[cite: 5].
-* **Causes**: Myocardial infarction, chronic ischemia, myocarditis, and degenerative aging[cite: 6, 7, 8, 9].
-* **Symptom-Sensor Correlation**: Detailed table mapping clinical manifestations (e.g., Arrhythmias, Fatigue, Dyspnea) to measurable wearable signals (HRV, Activity, HR Trends)[cite: 20].
+* **Heart Sclerosis Definition**: Pathological replacement of healthy heart muscle (myocardium) with fibrous/scar tissue, leading to impaired function.
+* **Causes**: Myocardial infarction, chronic ischemia, myocarditis, and degenerative aging.
+* **Symptom-Sensor Correlation**: Detailed table mapping clinical manifestations (e.g., Arrhythmias, Fatigue, Dyspnea) to measurable wearable signals (HRV, Activity, HR Trends).
 
 ---
 
