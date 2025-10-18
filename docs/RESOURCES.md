@@ -1,36 +1,38 @@
 # Resources & References
 
-Useful links and resources we've found helpful while working on this project.
+---
 
+## 🎯 Clinical & Medical References
 
-## Hardware Documentation
+* **Heart Sclerosis Definition**: Pathological replacement of healthy heart muscle (myocardium) with fibrous/scar tissue, leading to impaired function[cite: 5].
+* **Causes**: Myocardial infarction, chronic ischemia, myocarditis, and degenerative aging[cite: 6, 7, 8, 9].
+* **Symptom-Sensor Correlation**: Detailed table mapping clinical manifestations (e.g., Arrhythmias, Fatigue, Dyspnea) to measurable wearable signals (HRV, Activity, HR Trends)[cite: 20].
 
-### T-Watch S3
-- **Official GitHub**: https://github.com/Xinyuan-LilyGO/TTGO_TWatch_Library
-- **Recommended ESP32 Core**: Version 2.0.14
+---
 
-### MAX30102 Sensor
-- **Datasheet**: https://www.analog.com/media/en/technical-documentation/data-sheets/max30102.pdf
-- **SparkFun Library**: https://github.com/sparkfun/SparkFun_MAX3010x_Sensor_Library
+## 💾 AI/ML Datasets (Pre-training)
 
+These datasets are crucial for pre-training our models on signal quality and clinical conditions:
 
-## Tutorials That Helped
+* **PulseDB (MIMIC-III / VitalDB Derivative)**: High-quality, cleaned **PPG, ECG** segments with extracted **beat-to-beat points**. Excellent for training on **PPG Morphology** and precise HRV extraction.
+* **PPG-DaLiA (PPG + Accelerometer during Daily Activities)**: Contains wrist-worn **PPG and Accelerometer (ACC)** data from daily life. **Essential for training motion artifact reduction** and activity-level correlation.
+* **BIDMC Congestive Heart Failure Database (CHFDB)**: Long-term **ECG recordings** from subjects with severe CHF (a condition resulting from myocardial fibrosis). **Crucial for providing the clinical label** (Compromised Heart Function) for the AI model.
 
-### T-Watch S3
-- **T-Watch-S3-Plus Arduino IDE Quick Start**: https://github.com/Xinyuan-LilyGO/LilyGoLib/blob/master/docs/lilygo-t-watch-s3-plus.md
-- **T-Watch-S3-Plus Hardware Information**: https://github.com/Xinyuan-LilyGO/LilyGoLib/blob/master/docs/hardware/lilygo-t-watch-s3-plus.md
-- **LILYGO T-WATCH S3 User Guide**: https://manuals.plus/m/11ecc341da536643826240e076d7be2ee0173d4c02829105aa7d014eadee57cc
+---
 
-### MAX30102 Sensor Integration
-- **Guide to Using MAX30102**: https://www.instructables.com/Guide-to-Using-MAX30102-Heart-Rate-and-Oxygen-Sens/
+## 🛠 Signal Processing & Data Analysis Tools
 
-### Signal Processing & PPG
-- Understanding PPG signals: https://github.com/paulvangentcom/heartrate_analysis_Arduino
-- Heart rate calculation methods: https://makersportal.com/blog/2019/6/24/arduino-heart-rate-monitor-using-max30102-and-pulse-oximetry
+* **Python Libraries for PPG/HRV Analysis**:
+    * **WFDB (WaveForm DataBase)**: Toolset for reading and processing standard PhysioNet data formats.
+    * **hrv-analysis**: Dedicated Python package for extracting Time, Frequency, and Non-Linear HRV features.
+    * **SciPy/NumPy**: Used for signal filtering (e.g., Butterworth bandpass filter) and general signal processing.
 
+---
 
-## Backend Development
+## 💻 Hardware & Software Documentation
 
-### Python frameworks
-- **FastAPI Documentation**: https://fastapi.tiangolo.com/
-- **sqlalchemy ORM Quick Start**: https://docs.sqlalchemy.org/en/20/orm/quickstart.html
+* **LILYGO T-Watch S3 Official GitHub**: `https://github.com/Xinyuan-LilyGO/TTGO_TWatch_Library`
+* **MAX30102 Datasheet**: `https://www.analog.com/media/en/technical-documentation/data-sheets/max30102.pdf`
+* **Backend Framework**: FastAPI Documentation: `https://fastapi.tiangolo.com/`
+* **ORM**: SQLAlchemy ORM Quick Start: `https://docs.sqlalchemy.org/en/20/orm/quickstart.html`
+* **PostgreSQL Best Practices**: For high-volume time-series data storage and query optimization (e.g., partitioning, indexing on timestamps).
