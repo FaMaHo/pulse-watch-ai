@@ -12,11 +12,19 @@
 
 ## 💾 AI/ML Datasets (Pre-training)
 
-These datasets are crucial for pre-training our models on signal quality and clinical conditions:
+### Foundation Datasets (PPG + ECG Morphology)
+* **MIMIC-III Waveform Database**: Hospital-grade PPG, ECG, ABP from ~30,000 ICU patients. Industry standard for cardiovascular ML research. Includes heart failure cases. Requires credentialed access via PhysioNet.
+* **PulseDB (MIMIC-III/VitalDB Derivative)**: 5.2M cleaned PPG + ECG segments from 5,361 subjects with beat-to-beat annotations. Pre-processed and ML-ready. https://github.com/pulselabteam/PulseDB
 
-* **PulseDB (MIMIC-III / VitalDB Derivative)**: High-quality, cleaned **PPG, ECG** segments with extracted **beat-to-beat points**. Excellent for training on **PPG Morphology** and precise HRV extraction.
-* **PPG-DaLiA (PPG + Accelerometer during Daily Activities)**: Contains wrist-worn **PPG and Accelerometer (ACC)** data from daily life. **Essential for training motion artifact reduction** and activity-level correlation.
-* **BIDMC Congestive Heart Failure Database (CHFDB)**: Long-term **ECG recordings** from subjects with severe CHF (a condition resulting from myocardial fibrosis). **Crucial for providing the clinical label** (Compromised Heart Function) for the AI model.
+### Motion Artifact Training (PPG + Accelerometer)
+* **PPG-DaLiA**: 15 subjects, wrist PPG + 3-axis ACC during daily activities (cycling, walking, working). Essential for motion artifact handling.
+* **WESAD**: 15 subjects, wrist BVP + ACC during stress/baseline conditions. Multimodal wearable data.
+* **WildPPG**: 16 subjects, 216 hours of real-world outdoor PPG + ACC (hiking, traveling). High motion artifact diversity.
+* **GalaxyPPG**: 24 subjects with consumer-grade Galaxy Watch PPG + ACC. Validates commercial wearable performance.
+
+### Disease Labels (Heart Failure / Compromised Function)
+* **BIDMC Congestive Heart Failure Database**: 15 subjects with severe CHF, 20-hour ECG recordings. Provides ground truth for compromised heart function. PhysioNet
+* **MIMIC-III Clinical Database**: 682 heart failure patients + 954 controls with structured clinical data. Used for disease classification validation.
 
 ---
 
@@ -31,8 +39,8 @@ These datasets are crucial for pre-training our models on signal quality and cli
 
 ## 💻 Hardware & Software Documentation
 
-* **LILYGO T-Watch S3 Official GitHub**: `https://github.com/Xinyuan-LilyGO/TTGO_TWatch_Library`
-* **MAX30102 Datasheet**: `https://www.analog.com/media/en/technical-documentation/data-sheets/max30102.pdf`
-* **Backend Framework**: FastAPI Documentation: `https://fastapi.tiangolo.com/`
-* **ORM**: SQLAlchemy ORM Quick Start: `https://docs.sqlalchemy.org/en/20/orm/quickstart.html`
+* **LILYGO T-Watch S3 Official GitHub**: https://github.com/Xinyuan-LilyGO/TTGO_TWatch_Library
+* **MAX30102 Datasheet**: https://www.analog.com/media/en/technical-documentation/data-sheets/max30102.pdf
+* **Backend Framework**: FastAPI Documentation: https://fastapi.tiangolo.com/
+* **ORM**: SQLAlchemy ORM Quick Start: https://docs.sqlalchemy.org/en/20/orm/quickstart.html
 * **PostgreSQL Best Practices**: For high-volume time-series data storage and query optimization (e.g., partitioning, indexing on timestamps).
