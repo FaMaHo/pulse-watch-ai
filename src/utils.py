@@ -196,7 +196,6 @@ def extract_features_with_labels(file_path):
                 'file_name': os.path.basename(file_path),
                 'dataset': 'MIMIC' if 'MIMIC' in file_path else 'VitalDB',
                 'subject_id': metadata['subject_id'],
-                'num_beats': len(r_stops),
                 'num_beats': len(r_peaks),
                 **hrv_feats,
                 **ppg_feats,
