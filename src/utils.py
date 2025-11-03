@@ -28,6 +28,17 @@ def setup_paths():
 def load_signal_from_mat(file_path, signal_type='PPG'):
     """
     Load PPG or ECG signal from .mat file
+    
+    Parameters:
+    -----------
+    file_path : str
+        Path to .mat file
+    signal_type : str
+        'PPG' or 'ECG'
+    
+    Returns:
+    --------
+    signal : numpy array or None
     """
     try:
         with h5py.File(file_path, 'r') as mat_data:
@@ -92,6 +103,8 @@ def extract_ppg_features(ppg_signal, ppg_peaks):
     
     return features
 
+# Add this to your utils.py file
+
 def decode_ascii_field(mat_data, field_ref):
     """Helper to decode ASCII-encoded fields"""
     try:
@@ -103,6 +116,19 @@ def decode_ascii_field(mat_data, field_ref):
 def extract_metadata(mat_data, data_group, segment_idx=0):
     """
     Extract metadata (Age, Gender, BP, SubjectID) from a segment
+    
+    Parameters:
+    -----------
+    mat_data : h5py.File
+        Opened .mat file
+    data_group : h5py.Group
+        The 'Subj_Wins' group
+    segment_idx : int
+        Which segment to extract (default: 0 = first segment)
+    
+    Returns:
+    --------
+    dict with metadata or None if extraction fails
     """
     metadata = {}
     
@@ -142,20 +168,50 @@ def extract_metadata(mat_data, data_group, segment_idx=0):
             metadata['subject_id'] = decode_ascii_field(mat_data, subj_ref)
         else:
             metadata['subject_id'] = None
-            
+        
         return metadata
     
     except Exception as e:
         return None
 
-def extract_features_with_labels(file_path):
+def create_health_label(age, systolic_bp, diastolic_bp):
     """
-    Extract features AND labels from .mat file
+    Create health risk label based on age and blood pressure
     
-    MODIFIED: This function no longer creates a label.
-    It only extracts features and metadata.
-    The main script will be responsible for labeling.
+    Classification:
+    - 0: Low risk (healthy)
+    - 1: Moderate risk
+    - 2: High risk (likely cardiac issues)
+    
+    Returns:
+    --------
+    int: 0, 1, or 2 (or None if data missing)
     """
+    if age is None or systolic_bp is None or diastolic_bp is None:
+        return None
+    
+    # Blood pressure risk assessment
+    if systolic_bp >= 140 or diastolic_bp >= 90:
+        bp_risk = 2  # Stage 2 Hypertension
+    elif 130 <= systolic_bp < 140 or 80 <= diastolic_bp < 90:
+        bp_risk = 1  # Stage 1 Hypertension
+    elif 120 <= systolic_bp < 130 and diastolic_bp < 80:
+        bp_risk = 1  # Elevated
+    elif systolic_bp < 90:
+        bp_risk = 1  # Hypotension (also concerning)
+    else:
+        bp_risk = 0  # Normal
+    
+    # Age risk factor
+    age_risk = 1 if age >= 65 else 0
+    
+    # Combined risk score (0-2)
+    total_risk = min(bp_risk + age_risk, 2)
+    
+    return total_risk
+
+def extract_features_with_labels(file_path):
+    """Extract features AND labels from .mat file"""
     try:
         with h5py.File(file_path, 'r') as mat_data:
             if 'Subj_Wins' not in mat_data:
@@ -191,6 +247,13 @@ def extract_features_with_labels(file_path):
             if metadata is None:
                 return None
             
+            # Create health label
+            label = create_health_label(
+                metadata['age'],
+                metadata['systolic_bp'],
+                metadata['diastolic_bp']
+            )
+            
             # Combine everything
             record = {
                 'file_name': os.path.basename(file_path),
@@ -200,9 +263,68 @@ def extract_features_with_labels(file_path):
                 **hrv_feats,
                 **ppg_feats,
                 **metadata,
+                'health_label': label  # Our target variable
             }
             
             return record
             
     except Exception as e:
         return None
+
+def create_cardiac_risk_label(record):
+    """
+    Create cardiac risk label based on multiple clinical factors
+    
+    Risk factors for cardiac disease (including sclerosis):
+    1. Low HRV (SDNN < 50ms) - autonomic dysfunction
+    2. Low RMSSD (<20ms) - parasympathetic impairment  
+    3. Low pNN50 (<3%) - reduced variability
+    4. Irregular PPG amplitude - vascular stiffness
+    5. Age >= 60 - increased risk
+    6. Hypertension - contributes to fibrosis
+    
+    Based on:
+    - Task Force of ESC/NASPE. Heart rate variability. Circulation 1996
+    - Schroeder et al. Hypertension and cardiac autonomic function. 2003
+    
+    Returns:
+    --------
+    0: Low risk (healthy cardiac function)
+    1: High risk (abnormal cardiac patterns - sclerosis risk)
+    """
+    
+    risk_score = 0
+    
+    # 1. HRV Assessment
+    if record.get('sdnn', 100) < 50:  # SDNN < 50ms is clinically significant
+        risk_score += 2
+    
+    if record.get('rmssd', 100) < 20:  # RMSSD < 20ms
+        risk_score += 1
+    
+    if record.get('pnn50', 10) < 3:  # pNN50 < 3%
+        risk_score += 1
+    
+    # 2. Heart Rate
+    mean_hr = record.get('mean_hr', 70)
+    if mean_hr < 50 or mean_hr > 100:  # Bradycardia or tachycardia
+        risk_score += 1
+    
+    # 3. PPG Morphology
+    std_amplitude = record.get('std_amplitude', 0)
+    if std_amplitude > 0.2:  # High irregularity
+        risk_score += 1
+    
+    # 4. Blood Pressure
+    sbp = record.get('systolic_bp', 120)
+    dbp = record.get('diastolic_bp', 80)
+    if sbp >= 140 or dbp >= 90:
+        risk_score += 1
+    
+    # 5. Age Factor
+    age = record.get('age', 50)
+    if age >= 60:
+        risk_score += 1
+    
+    # Classification: 0-2 = Low risk, 3+ = High risk
+    return 1 if risk_score >= 3 else 0
